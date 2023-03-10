@@ -43,6 +43,8 @@ def approveToken():
 
     signed_txn = web3.eth.account.sign_transaction(contract_txn, private_key=privatekey)
     tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
+    web3.eth.wait_for_transaction_receipt(tx_hash)
+
 
 def createLock():
     nonce = web3.eth.get_transaction_count(address_wallet)
@@ -64,7 +66,7 @@ def createLock():
         })
     signed_txn = web3.eth.account.sign_transaction(contract_txn, private_key=privatekey)
     tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
-
+    web3.eth.wait_for_transaction_receipt(tx_hash)
 
 
 def randomizedSleeping(from_sleep, to_sleep):
@@ -74,10 +76,8 @@ def randomizedSleeping(from_sleep, to_sleep):
 
 if __name__ == "__main__":
 
-    cprint(f'\n============================================= hodlmod.eth =============================================',
+    cprint(f'\n============================================= indeoo =============================================',
            'cyan')
-
-    cprint(f'\nsubscribe to us : https://t.me/hodlmodeth', 'magenta')
 
     with open("private_keys.txt", "r") as f:
         keys_list = [row.strip() for row in f]
@@ -92,7 +92,6 @@ if __name__ == "__main__":
         address_wallet = account.address
 
         approveToken()
-        time.sleep(1)
         createLock()
 
         randomizedSleeping(fromSeconds, toSeconds)
